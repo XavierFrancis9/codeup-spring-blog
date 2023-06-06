@@ -2,13 +2,11 @@ package com.codeup.coduepspringblog.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class HomeController {
-    @GetMapping("/")
-    public String home() {
-        return "home";
+public class DiceController {
+    @GetMapping("/roll-dice")
+    public String index() {
+        return "dice/roll-dice";
     }
-
 }

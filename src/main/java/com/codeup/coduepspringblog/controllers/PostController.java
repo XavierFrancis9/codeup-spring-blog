@@ -1,39 +1,48 @@
 package com.codeup.coduepspringblog.controllers;
 
+import com.codeup.coduepspringblog.Post;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class PostController {
     @GetMapping("/posts")
-    @ResponseBody
-    public String index() {
-        return "<h1>posts index page</h1>";
+
+    public String posts(Model model) {
+        Post p2 = new Post("Whats Up", "I'm bored so im making a post");
+        Post p3 = new Post("Hey Everyone", "Im just writing a post because");
+        List<Post> posts = new ArrayList<>();
+
+        posts.add(p2);
+        posts.add(p3);
+
+        model.addAttribute("posts", posts);
+
+        return "posts/index";
     }
 
     @GetMapping("/posts/{id}")
-    @ResponseBody
-    public String id(@PathVariable int id) {
-        return "<h1>view an individual post</h1>" +
-                "<p>Your viewing post #" + id + "</p>";
+
+    public String post(@PathVariable Long id, Model model) {
+        Post p1 = new Post("YOOO", "This is my first post!");
+        model.addAttribute("title", p1.getTitle());
+        model.addAttribute("body", p1.getBody());
+        return "posts/show";
     }
 
     @GetMapping("/posts/create")
-    @ResponseBody
     public String create() {
-        return "<h1>view the form for creating a post</h1>" +
-                "<form>" +
-                "<input name='userInput'>" +
-                "<button>Submit</button" +
-                "</form>";
+        return "posts/index";
     }
 
     @PostMapping("/posts/create")
     @ResponseBody
-    public String createPost() {
-        return "<h1>create a new post</h1>";
+    public String createPost(@RequestParam String title, String body, Model model) {
+
+        return "/posts/index";
     }
 }

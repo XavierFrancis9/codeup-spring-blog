@@ -3,18 +3,30 @@
 <head>
     <meta charset="UTF-8" />
     <title>Home</title>
+    <th:block th:replace="partials/bootstrap :: bootstrapStyle"></th:block>
+    <style>
+        body {
+            margin: 0 15px;
+        }
+        .post h2{
+            text-align: center;
+        }
+
+    </style>
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
-<h2 th:replace="partials/header :: header"></h2>
+<h1 style="text-align: center">Post Details for Post #<span th:text="${id}"></span></h1>
+<hr>
 
-<h1>This is the Post</h1>
-
-<div>
+<div class="post">
     <h2 th:text = "${title}"></h2>
     <p th:text = "${body}"></p>
     <small th:text ="${email}"></small>
 </div>
+<hr>
 <footer th:replace="partials/footer :: footer"></footer>
+<th:block th:replace="partials/bootstrap :: bootstrapJS"></th:block>
+
 </body>
 </html>

@@ -36,7 +36,6 @@ public class PostController {
 
     @GetMapping("/posts/{id}")
     public String post(@PathVariable Long id, Model model) {
-        model.addAttribute("id", id);
         Post post = postsDao.findById(id).get();
         User user = post.getUser();
         model.addAttribute("email", user.getEmail());
@@ -53,8 +52,6 @@ public class PostController {
 
     @PostMapping("/posts/create")
     public String createPost(@RequestParam String title, String body, Model model) {
-        model.addAttribute("title", title);
-        model.addAttribute("body", body);
         User user = usersDao.findById(1L).get();
         Post post = new Post(user,title, body);
         postsDao.save(post);

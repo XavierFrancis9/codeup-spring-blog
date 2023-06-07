@@ -4,6 +4,15 @@
     <meta charset="UTF-8" />
     <title>Home</title>
     <th:block th:replace="partials/bootstrap :: bootstrapStyle"></th:block>
+    <style>
+        body {
+            margin: 0 15px;
+        }
+
+        .card {
+            margin: 25px 0;
+        }
+    </style>
 
 </head>
 <body>
@@ -13,14 +22,27 @@
 <h1>All Posts</h1>
 
 <form action="/posts/create" method = "get">
-    <button>Create Post</button>
+    <button type="submit" class="btn btn-primary btn-sm">Create New Post</button>
 </form>
-
+<br>
+<div id="cardContainer">
 <th:block th:each="post : ${posts}">
-    <h2 th:text="${post.title}"></h2>
-    <p th:text="${post.body}"></p>
-    <a th:href="@{/posts/{id}(id=${post.id})}">Show Details</a>
+
+    <div class="card text-center">
+        <div class="card-header">
+            <span th:text="${post.user.username}"></span>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title" th:text="${post.title}"></h5>
+            <p class="card-text" th:text="${post.body}"></p>
+            <a th:href="@{/posts/{id}(id=${post.id})}" class="btn btn-primary btn-sm">See Details</a>
+        </div>
+        <div class="card-footer text-body-secondary">
+            date posted
+        </div>
+    </div>
 </th:block>
+</div>
 <footer th:replace="partials/footer :: footer"></footer>
 <th:block th:replace="partials/bootstrap :: bootstrapJS"></th:block>
 </body>

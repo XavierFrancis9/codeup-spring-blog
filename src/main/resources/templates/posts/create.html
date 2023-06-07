@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <th:block th:replace="partials/bootstrap :: bootstrapStyle"></th:block>
 </head>
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
@@ -22,5 +23,6 @@
   <button>Submit</button>
 </form>
 <footer th:replace="partials/footer :: footer"></footer>
+<th:block th:replace="partials/bootstrap :: bootstrapJS"></th:block>
 </body>
 </html>

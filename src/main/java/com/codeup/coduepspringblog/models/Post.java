@@ -21,7 +21,17 @@ public class Post {
     @Column(nullable = false)
     private String body;
 
+    @ManyToOne
+    @JoinColumn (name = "user_id")
+    private User user;
+
     public Post(String title, String body) {
+        this.title = title;
+        this.body = body;
+    }
+
+    public Post(User user, String title, String body) {
+        this.user = user;
         this.title = title;
         this.body = body;
     }

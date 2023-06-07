@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
+<nav th:replace="partials/navbar :: navbar"></nav>
+<h2 th:replace="partials/header :: header"></h2>
 <h1>Create a New Post</h1>
 <form action="/posts/create" method = "post">
   <div>
@@ -16,9 +18,9 @@
     <label for="body">Body</label>
     <input type="text" id= "body" name="body">
   </div>
-
+<input type="hidden" name="userId" th:value=1Long>
   <button>Submit</button>
 </form>
-
+<footer th:replace="partials/footer :: footer"></footer>
 </body>
 </html>

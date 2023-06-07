@@ -1,7 +1,9 @@
 package com.codeup.coduepspringblog.controllers;
 
 import com.codeup.coduepspringblog.models.Post;
+import com.codeup.coduepspringblog.models.User;
 import com.codeup.coduepspringblog.repositories.PostRepository;
+import com.codeup.coduepspringblog.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +15,17 @@ import java.util.List;
 public class PostController {
 
     private final PostRepository postsDao;
+    private final UserRepository usersDao;
 
-    public PostController(PostRepository postsDao) {
+
+    public PostController(PostRepository postsDao, UserRepository usersDao) {
         this.postsDao = postsDao;
+        this.usersDao = usersDao;
     }
 
-    @GetMapping("/posts")
 
+
+    @GetMapping("/posts")
     public String posts(Model model) {
         List<Post> posts = postsDao.findAll();
         model.addAttribute("posts", posts);
@@ -29,11 +35,14 @@ public class PostController {
 
 
     @GetMapping("/posts/{id}")
-
     public String post(@PathVariable Long id, Model model) {
-        Post p1 = new Post(1L,"YOOO", "This is my first post!");
-        model.addAttribute("title", p1.getTitle());
-        model.addAttribute("body", p1.getBody());
+        model.addAttribute("id", id);
+        Post post = postsDao.findById(id).get();
+        User user = post.getUser();
+        model.addAttribute("email", user.getEmail());
+        model.addAttribute("title", post.getTitle());
+        model.addAttribute("body", post.getBody());
+
         return "posts/show";
     }
 
@@ -43,13 +52,12 @@ public class PostController {
     }
 
     @PostMapping("/posts/create")
-
     public String createPost(@RequestParam String title, String body, Model model) {
         model.addAttribute("title", title);
         model.addAttribute("body", body);
-        Post post = new Post(title, body);
+        User user = usersDao.findById(1L).get();
+        Post post = new Post(user,title, body);
         postsDao.save(post);
-
         return "redirect:/posts";
     }
 

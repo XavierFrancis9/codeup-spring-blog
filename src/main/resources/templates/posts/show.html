@@ -24,6 +24,7 @@
     <p th:text = "${body}"></p>
     <small th:text ="${email}"></small>
 </div>
+<a th:href="@{/posts/{id}/edit(id=${post.id})}">Edit Post</a>
 <hr>
 <footer th:replace="partials/footer :: footer"></footer>
 <th:block th:replace="partials/bootstrap :: bootstrapJS"></th:block>

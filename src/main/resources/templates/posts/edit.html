@@ -8,10 +8,11 @@
 <body>
 <nav th:replace="partials/navbar :: navbar"></nav>
 <h2 th:replace="partials/header :: header"></h2>
-<h1>Create a New Post</h1>
-<form th:action="@{/posts/create}" th:method = "post" th:object = "${post}">
+<h1>Edit Post</h1>
+<form th:action="@{/posts/{id}/edit(id=${post.id})}" th:object="${post}" th:method="post">
     <th:block th:replace="partials/editCreateForm :: form"></th:block>
 </form>
+
 <footer th:replace="partials/footer :: footer"></footer>
 <th:block th:replace="partials/bootstrap :: bootstrapJS"></th:block>
 </body>

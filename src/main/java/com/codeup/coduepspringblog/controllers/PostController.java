@@ -38,6 +38,7 @@ public class PostController {
     public String post(@PathVariable Long id, Model model) {
         Post post = postsDao.findById(id).get();
         User user = post.getUser();
+        model.addAttribute("post", post);
         model.addAttribute("email", user.getEmail());
         model.addAttribute("title", post.getTitle());
         model.addAttribute("body", post.getBody());
@@ -45,15 +46,33 @@ public class PostController {
         return "posts/show";
     }
 
+    @GetMapping("/posts/{id}/edit")
+    public String showEdit(@PathVariable Long id, Model model) {
+        Post post = postsDao.findById(id).get();
+        model.addAttribute("post", post);
+        return "/posts/edit";
+    }
+
+    @PostMapping("/posts/{id}/edit")
+    public String editPost(@PathVariable Long id, @ModelAttribute Post post) {
+        Post editPost = postsDao.findById(id).get();
+        editPost.setBody(post.getBody());
+        editPost.setTitle(post.getTitle());
+        postsDao.save(editPost);
+        return "redirect:/posts";
+    }
+
+
     @GetMapping("/posts/create")
-    public String create() {
+    public String create(Model model) {
+        model.addAttribute("post", new Post());
         return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    public String createPost(@RequestParam String title, String body, Model model) {
+    public String createPost(@ModelAttribute Post post) {
         User user = usersDao.findById(1L).get();
-        Post post = new Post(user,title, body);
+        post.setUser(user);
         postsDao.save(post);
         return "redirect:/posts";
     }

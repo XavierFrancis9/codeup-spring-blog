@@ -72,8 +72,8 @@ public class PostController {
     }
 
     @PostMapping("/posts/create")
-    public String createPost(@ModelAttribute Post post) {
-        User user = usersDao.findById(1L).get();
+    public String createPost(@ModelAttribute Post post, @RequestParam String userId){
+        User user = usersDao.findById(Long.valueOf(userId)).get();
         post.setUser(user);
         postsDao.save(post);
         emailService.prepareAndSend(post,"You created a new post!", "Title: " + post.getTitle() + "\nBody: " + post.getBody());

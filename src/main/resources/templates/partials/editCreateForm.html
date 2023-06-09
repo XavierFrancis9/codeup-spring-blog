@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -15,7 +15,7 @@
     <label for="body">Body</label>
     <input type="text" id="body" th:field="*{body}">
   </div>
-
+  <input type="hidden" name="userId" th:value="${#authentication.principal.id}">
   <button type="submit">Submit</button>
 </th:block>
 

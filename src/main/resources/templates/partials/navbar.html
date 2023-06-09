@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -7,11 +7,20 @@
 <body>
 <nav th:fragment = "navbar" class="navbar bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand">Spring Blog</a>
+        <a class="navbar-brand" href="/posts">Spring Blog</a>
+    <div class="d-flex">
+        <form sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="post">
+            <button class="btn-link btn" style="margin-top: 8px">Logout</button>
+        </form>
+
+        <a href="/login">
+            <button sec:authorize="!isAuthenticated()" class="btn-link btn" style="margin-top: 8px" href = "/login">Login/Register</button>
+        </a>
         <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
+    </div>
     </div>
 </nav>
 

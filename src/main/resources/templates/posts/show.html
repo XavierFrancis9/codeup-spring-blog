@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" />
     <title>Home</title>
@@ -24,7 +24,10 @@
     <p th:text = "${body}"></p>
     <small th:text ="${email}"></small>
 </div>
-<a th:href="@{/posts/{id}/edit(id=${post.id})}">Edit Post</a>
+<div th:if="${#authentication.principal.id == post.user.getId()}">
+    <a th:href="@{/posts/{id}/edit(id=${post.id})}">Edit Post</a>
+</div>
+
 <hr>
 <footer th:replace="partials/footer :: footer"></footer>
 <th:block th:replace="partials/bootstrap :: bootstrapJS"></th:block>

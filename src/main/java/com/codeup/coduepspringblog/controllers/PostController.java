@@ -5,6 +5,7 @@ import com.codeup.coduepspringblog.models.Post;
 import com.codeup.coduepspringblog.models.User;
 import com.codeup.coduepspringblog.repositories.PostRepository;
 import com.codeup.coduepspringblog.repositories.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -64,6 +65,12 @@ public class PostController {
         return "redirect:/posts";
     }
 
+    @GetMapping("/posts/{id}/delete")
+    public String deletePost(@PathVariable Long id, @ModelAttribute Post post) {
+        Post deletePost = postsDao.findById(id).get();
+        postsDao.delete(deletePost);
+        return "redirect:/posts";
+    }
 
     @GetMapping("/posts/create")
     public String create(Model model) {
@@ -72,8 +79,8 @@ public class PostController {
     }
 
     @PostMapping("/posts/create")
-    public String createPost(@ModelAttribute Post post, @RequestParam String userId){
-        User user = usersDao.findById(Long.valueOf(userId)).get();
+    public String createPost(@ModelAttribute Post post){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setUser(user);
         postsDao.save(post);
         emailService.prepareAndSend(post,"You created a new post!", "Title: " + post.getTitle() + "\nBody: " + post.getBody());

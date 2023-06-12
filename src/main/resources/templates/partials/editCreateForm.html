@@ -15,7 +15,6 @@
     <label for="body">Body</label>
     <input type="text" id="body" th:field="*{body}">
   </div>
-  <input type="hidden" name="userId" th:value="${#authentication.principal.id}">
   <button type="submit">Submit</button>
 </th:block>
 

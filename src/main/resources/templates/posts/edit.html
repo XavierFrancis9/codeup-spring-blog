@@ -12,6 +12,9 @@
 <form th:action="@{/posts/{id}/edit(id=${post.id})}" th:object="${post}" th:method="post">
     <th:block th:replace="partials/editCreateForm :: form"></th:block>
 </form>
+<form th:action="@{/posts/{id}/delete(id=${post.id})}" action="get">
+    <button type="submit">Delete Post</button>
+</form>
 
 <footer th:replace="partials/footer :: footer"></footer>
 <th:block th:replace="partials/bootstrap :: bootstrapJS"></th:block>

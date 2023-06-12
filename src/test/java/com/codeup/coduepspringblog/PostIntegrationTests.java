@@ -131,7 +131,7 @@ public class PostIntegrationTests {
         // Makes a Post request to /ads/{id}/edit and expect a redirection to the Ad show page
         this.mvc.perform(
                         post("/posts/" + existingPost.getId() + "/edit").with(csrf())
-//                                .session((MockHttpSession) httpSession)
+                                .session((MockHttpSession) httpSession)
                                 .param("title", "edited title")
                                 .param("body", "edited body"))
                 .andExpect(status().is3xxRedirection());
@@ -140,6 +140,7 @@ public class PostIntegrationTests {
         this.mvc.perform(get("/posts/" + existingPost.getId()).with(csrf())
                 .session((MockHttpSession) httpSession))
                 .andExpect(status().isOk())
+
                 // Test the dynamic content of the page
                 .andExpect(content().string(containsString("edited title")))
                 .andExpect(content().string(containsString("edited body")));
@@ -158,9 +159,9 @@ public class PostIntegrationTests {
         // Get the recent Ad that matches the title
         Post existingPost = postsDao.findByTitle("post to be deleted");
 
-        // Makes a Post request to /ads/{id}/delete and expect a redirection to the Ads index
+        // Makes a Post request to /ads/{id}/delete and expect a redirection to the Posts index
         this.mvc.perform(
-                        get("/posts/" + existingPost.getId() + "/delete").with(csrf())
+                        post("/posts/" + existingPost.getId() + "/delete").with(csrf())
                                 .session((MockHttpSession) httpSession)
                                 .param("id", String.valueOf(existingPost.getId())))
                 .andExpect(status().is3xxRedirection());

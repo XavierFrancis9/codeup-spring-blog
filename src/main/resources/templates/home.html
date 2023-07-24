@@ -4,9 +4,14 @@
     <meta charset="UTF-8" />
     <title>Home</title>
     <th:block th:include="partials/bootstrap.html :: bootstrapStyle"></th:block>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}">
 </head>
 <body>
-<nav th:replace="partials/navbar :: navbar"></nav>
+<header>
+<nav>
+    <span id = "mainLogo">JXF</span>
+</nav>
+</header>
 
 <h1>This is the home page</h1>
 <th:block th:include="partials/bootstrap.html :: bootstrapJS"></th:block>

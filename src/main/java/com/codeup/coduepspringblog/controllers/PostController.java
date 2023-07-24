@@ -65,12 +65,10 @@ public class PostController {
         return "redirect:/posts";
     }
 
-    @PostMapping("/posts/{id}/delete")
-    public String deletePost(@PathVariable Long id) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(user.getId() == postsDao.getById(id).getUser().getId()) {
-            postsDao.deleteById(id);
-        }
+    @GetMapping("/posts/{id}/delete")
+    public String deletePost(@PathVariable Long id, @ModelAttribute Post post) {
+        Post deletePost = postsDao.findById(id).get();
+        postsDao.delete(deletePost);
         return "redirect:/posts";
     }
 
